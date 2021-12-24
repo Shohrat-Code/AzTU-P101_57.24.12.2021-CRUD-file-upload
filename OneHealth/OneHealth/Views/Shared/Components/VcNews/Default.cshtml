@@ -1,0 +1,37 @@
+﻿@model VmVcNews
+
+
+@foreach (var item in Model.Blogs)
+{
+    <div class="@(Model.Page=="Home"?"col-lg-4 wow zoomIn":"col-sm-6") py-2">
+        <div class="card-blog">
+            <div class="header">
+                <div class="post-category">
+                    <a href="#">Covid19</a>
+                </div>
+                <a href="blog-details.html" class="post-thumb">
+                    <img src="~/Uploads/@item.Image" alt="">
+                </a>
+            </div>
+            <div class="body">
+                <h5 class="post-title"><a asp-controller="news" asp-action="details" asp-route-id="@item.Id">@item.Title</a></h5>
+                <div class="site-info">
+                    <div class="avatar mr-2">
+                        <div class="avatar-img">
+                            <img src="../assets/img/person/person_1.jpg" alt="">
+                        </div>
+                        <span>@(item.User.Name+" "+item.User.Surname)</span>
+                    </div>
+                    @{
+                        DateTime today = DateTime.Today;
+                        TimeSpan diff = today.Subtract(item.CreatedDate);
+
+                        int days = diff.Days;
+                        int weeks = days / 7;
+                    }
+                    <span class="mai-time"></span> @(weeks==0?days==0?item.CreatedDate.ToString("HH:mm"): days + " days ago" : weeks+ " week ago")
+                </div>
+            </div>
+        </div>
+    </div>
+}
